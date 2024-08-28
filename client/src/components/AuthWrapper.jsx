@@ -7,6 +7,11 @@ import { MdFacebook } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useStateProvider } from "../context/StateContext";
 import { reducerCases } from "../context/constants";
+import ConnectWallet from "./ConnectPhantom";
+import ConnectBackpackWalletButton from "./ConnectBackpack";
+import ConnectBackpack from "./ConnectBackpack";
+import ConnectMetaMask from "./ConnectMetaMask";
+import ConnectPhantom from "./ConnectPhantom";
 
 function AuthWrapper({ type }) {
   const [cookies, setCookies] = useCookies();
@@ -89,16 +94,19 @@ function AuthWrapper({ type }) {
               in to Fiverr
             </h3>
             <div className="flex flex-col gap-5">
-              <button className="text-white bg-blue-500 p-3 font-semibold w-80 flex items-center justify-center relative">
+              {/* <button className="text-white bg-blue-500 p-3 font-semibold w-80 flex items-center justify-center relative">
                 <MdFacebook className="absolute left-4 text-2xl" />
                 Continue with Facebook
               </button>
               <button className="border border-slate-300 p-3 font-medium w-80 flex items-center justify-center relative">
                 <FcGoogle className="absolute left-4 text-2xl" />
                 Continue with Google
-              </button>
+              </button> */}
+              <ConnectBackpack />
+              <ConnectMetaMask />
+              <ConnectPhantom />  
             </div>
-            <div className="relative  w-full text-center">
+            {/* <div className="relative  w-full text-center">
               <span className="before:content-[''] before:h-[0.5px] before:w-80 before:absolute before:top-[50%] before:left-0 before:bg-slate-400">
                 <span className="bg-white relative z-10 px-2">OR</span>
               </span>
@@ -125,7 +133,7 @@ function AuthWrapper({ type }) {
               >
                 Continue
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="py-5 w-full flex items-center justify-center border-t border-slate-400">
             <span className="text-sm  text-slate-700">
