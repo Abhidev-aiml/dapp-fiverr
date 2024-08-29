@@ -1,96 +1,87 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { genSalt, hash, compare } from "bcrypt";
+import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
-import { renameSync } from "fs";
 
-const generatePassword = async (password) => {
-  const salt = await genSalt();
-  return await hash(password, salt);
-};
+const prisma = new PrismaClient();
 
 const maxAge = 3 * 24 * 60 * 60;
-const createToken = (email, userId) => {
-  // @ts-ignore
-  return jwt.sign({ email, userId }, process.env.JWT_KEY, {
+const createToken = (publicKey, userId) => {
+  return jwt.sign({ publicKey, userId }, process.env.JWT_KEY, {
     expiresIn: maxAge,
   });
 };
 
-export const signup = async (req, res, next) => {
+// Web3 Signup
+export const signup = async (req, res) => {
   try {
-    const prisma = new PrismaClient();
-    const { email, password } = req.body;
-    if (email && password) {
+    const { publicKey } = req.body;
+
+    if (publicKey) {
+      const existingUser = await prisma.user.findUnique({
+        where: { publicKey },
+      });
+
+      if (existingUser) {
+        return res.status(400).send("User already exists");
+      }
+
       const user = await prisma.user.create({
         data: {
-          email,
-          password: await generatePassword(password),
+          publicKey,
+          isProfileInfoSet: false,
         },
       });
+
       return res.status(201).json({
-        user: { id: user?.id, email: user?.email },
-        jwt: createToken(email, user.id),
+        user: { id: user?.id, publicKey: user?.publicKey },
+        jwt: createToken(publicKey, user.id),
       });
     } else {
-      return res.status(400).send("Email and Password Required");
+      return res.status(400).send("Public Key is required");
     }
   } catch (err) {
     console.log(err);
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === "P2002") {
-        return res.status(400).send("Email Already Registered");
-      }
-    } else {
-      return res.status(500).send("Internal Server Error");
-    }
-    throw err;
-  }
-};
-
-export const login = async (req, res, next) => {
-  try {
-    const prisma = new PrismaClient();
-    const { email, password } = req.body;
-    if (email && password) {
-      const user = await prisma.user.findUnique({
-        where: {
-          email,
-        },
-      });
-      if (!user) {
-        return res.status(404).send("User not found");
-      }
-
-      const auth = await compare(password, user.password);
-      if (!auth) {
-        return res.status(400).send("Invalid Password");
-      }
-
-      return res.status(200).json({
-        user: { id: user?.id, email: user?.email },
-        jwt: createToken(email, user.id),
-      });
-    } else {
-      return res.status(400).send("Email and Password Required");
-    }
-  } catch (err) {
     return res.status(500).send("Internal Server Error");
   }
 };
 
-export const getUserInfo = async (req, res, next) => {
+// Web3 Login
+export const login = async (req, res) => {
+  try {
+    const { publicKey } = req.body;
+
+    if (publicKey) {
+      const user = await prisma.user.findUnique({
+        where: { publicKey },
+      });
+
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      return res.status(200).json({
+        user: { id: user?.id, publicKey: user?.publicKey },
+        jwt: createToken(publicKey, user.id),
+      });
+    } else {
+      return res.status(400).send("Public Key is required");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+// Get User Info
+export const getUserInfo = async (req, res) => {
   try {
     if (req?.userId) {
-      const prisma = new PrismaClient();
       const user = await prisma.user.findUnique({
-        where: {
-          id: req.userId,
-        },
+        where: { id: req.userId },
       });
       return res.status(200).json({
         user: {
           id: user?.id,
-          email: user?.email,
+          publicKey: user?.publicKey,
           image: user?.profileImage,
           username: user?.username,
           fullName: user?.fullName,
@@ -100,16 +91,16 @@ export const getUserInfo = async (req, res, next) => {
       });
     }
   } catch (err) {
-    res.status(500).send("Internal Server Occured");
+    res.status(500).send("Internal Server Error");
   }
 };
 
-export const setUserInfo = async (req, res, next) => {
+// Set User Info
+export const setUserInfo = async (req, res) => {
   try {
     if (req?.userId) {
       const { userName, fullName, description } = req.body;
       if (userName && fullName && description) {
-        const prisma = new PrismaClient();
         const userNameValid = await prisma.user.findUnique({
           where: { username: userName },
         });
@@ -129,7 +120,7 @@ export const setUserInfo = async (req, res, next) => {
       } else {
         return res
           .status(400)
-          .send("Username, Full Name and description should be included.");
+          .send("Username, Full Name, and description should be included.");
       }
     }
   } catch (err) {
@@ -144,14 +135,14 @@ export const setUserInfo = async (req, res, next) => {
   }
 };
 
-export const setUserImage = async (req, res, next) => {
+// Set User Image
+export const setUserImage = async (req, res) => {
   try {
     if (req.file) {
       if (req?.userId) {
         const date = Date.now();
         let fileName = "uploads/profiles/" + date + req.file.originalname;
         renameSync(req.file.path, fileName);
-        const prisma = new PrismaClient();
 
         await prisma.user.update({
           where: { id: req.userId },
@@ -161,9 +152,9 @@ export const setUserImage = async (req, res, next) => {
       }
       return res.status(400).send("Cookie Error.");
     }
-    return res.status(400).send("Image not inclued.");
+    return res.status(400).send("Image not included.");
   } catch (err) {
     console.log(err);
-    res.status(500).send("Internal Server Occured");
+    res.status(500).send("Internal Server Error");
   }
 };

@@ -12,16 +12,17 @@ import multer from "multer";
 const authRoutes = Router();
 const upload = multer({ dest: "uploads/profiles/" });
 
-authRoutes.post("/signup", signup);
-authRoutes.post("/login", login);
-authRoutes.post("/get-user-info", verifyToken, getUserInfo);
-authRoutes.post("/set-user-info", verifyToken, setUserInfo);
+// Routes
+authRoutes.post("/signup", signup); // Handles web3 wallet signup
+authRoutes.post("/login", login); // Handles web3 wallet login
+authRoutes.post("/get-user-info", verifyToken, getUserInfo); // Retrieves user info, requires JWT token
+authRoutes.post("/set-user-info", verifyToken, setUserInfo); // Sets user profile information, requires JWT token
 
 authRoutes.post(
   "/set-user-image",
   verifyToken,
   upload.single("images"),
-  setUserImage
+  setUserImage // Handles setting user profile image, requires JWT token
 );
 
 export default authRoutes;

@@ -12,6 +12,7 @@ datasource db {
 
 model User {
   id Int        @id @default(autoincrement())
+  publicKey        String      @unique
   email String  @unique
   password String 
   isSocialLogin Boolean? @default(false)
@@ -58,6 +59,8 @@ model Orders {
   gigId Int
   price Int
   messages Message[]
+  transactionHash String?  // Transaction hash from the blockchain
+  paymentStatus   String?  // Payment status, e.g., "Pending", "Completed"
 }
 
 model Reviews {
