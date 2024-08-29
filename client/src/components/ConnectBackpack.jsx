@@ -1,10 +1,15 @@
+'use client';
 import React, { useState, useEffect } from 'react';
+import backPack from '../../public/logos/backPack.png';
+import Image from "next/image";
+import { useRouter } from 'next/router';
 
-const ConnectBackpack = () => {
+const ConnectBackpack = ({type,closeFun}) => {
   const [isBackpackInstalled, setIsBackpackInstalled] = useState(false);
   const [buttonText, setButtonText] = useState('Connect Backpack');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (isBackpackAvailable()) {
       setIsBackpackInstalled(true);
@@ -30,11 +35,15 @@ const ConnectBackpack = () => {
     try {
       const accounts = await window.backpack.connect();
       setButtonText('Connected');
-      console.log('Accounts:', accounts);
+      console.log('Accounts:', accounts.publicKey.toString());
+      navigate()
     } catch (error) {
       console.error('Error occurred while connecting to Backpack:', error);
     } finally {
       setIsButtonDisabled(false);
+      console.log("Backpack connected");
+      closeFun();
+      type === 'login' ? router.push('/') : router.push('/search?category=Programming%20&%20Tech');
     }
   };
 
@@ -47,8 +56,9 @@ const ConnectBackpack = () => {
   };
 
   return (
-    <button onClick={handleClick} disabled={isButtonDisabled}>
-      {buttonText}
+    <button className="border border-slate-300 p-2 font-medium w-64 flex items-center justify-around relative rounded mb-3" onClick={handleClick} disabled={isButtonDisabled}>
+      <Image src={backPack} alt="BackPack Wallet" width={40} height={40} className="rounded"/>
+      <h2 className='text-slate-600'>{type === "login" ? "Login" : "Sign"} in with BackPack</h2>
     </button>
   );
 };

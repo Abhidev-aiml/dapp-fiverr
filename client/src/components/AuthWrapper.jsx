@@ -77,6 +77,17 @@ function AuthWrapper({ type }) {
     };
   }, [dispatch, showLoginModal, showSignupModal]);
 
+  const CloseModal = () => {
+    dispatch({
+      type: reducerCases.TOGGLE_SIGNUP_MODAL,
+      showSignupModal: false,
+    });
+    dispatch({
+      type: reducerCases.TOGGLE_LOGIN_MODAL,
+      showLoginModal: false,
+    });
+  }
+
   return (
     <div className="fixed top-0 z-[100]">
       <div
@@ -85,15 +96,16 @@ function AuthWrapper({ type }) {
       ></div>
       <div className="h-[100vh] w-[100vw] flex flex-col justify-center items-center">
         <div
-          className="fixed z-[101] h-max w-max bg-white flex flex-col justify-center items-center"
+          className="fixed relative z-[101] max-w-lg px-4 bg-white rounded shadow w-full flex flex-col justify-center items-center"
           id="auth-modal"
         >
+          <button className="absolute top-20 right-8" style={{top:"20px"}} onClick={CloseModal}>x</button>
           <div className="flex flex-col justify-center items-center p-8 gap-7">
-            <h3 className="text-2xl font-semibold text-slate-700">
+            {/* <h3 className="text-2xl font-semibold text-slate-700">
               {type === "login" ? "Login" : "Sign"}
               in to Fiverr
-            </h3>
-            <div className="flex flex-col gap-5">
+            </h3> */}
+            {/* <div className="flex flex-col gap-5"> */}
               {/* <button className="text-white bg-blue-500 p-3 font-semibold w-80 flex items-center justify-center relative">
                 <MdFacebook className="absolute left-4 text-2xl" />
                 Continue with Facebook
@@ -102,9 +114,32 @@ function AuthWrapper({ type }) {
                 <FcGoogle className="absolute left-4 text-2xl" />
                 Continue with Google
               </button> */}
-              <ConnectBackpack />
+              {/* <ConnectBackpack />
               <ConnectMetaMask />
               <ConnectPhantom />  
+            </div> */}
+            <div className=" w-full">
+            <h3 className="text-3xl font-semibold text-slate-700 mb-10">
+              {type === "login" ? "Login" : "Sign"}
+              in to Fiverr
+            </h3>
+                {/* <Greeting 
+                    image={session.data?.user?.image ?? ""} 
+                    name={session.data?.user?.name ?? ""} 
+                />
+                <div className="w-full flex px-10">
+                    {tabs.map(tab => <TabButton key={tab.id} active={tab.id === selectedTab} onClick={() => {
+                        setSelectedTab(tab.id)
+                    }}>{tab.name}</TabButton>)}
+                </div> */}
+                <ConnectPhantom type={type} closeFun={CloseModal}/> 
+                {/* <br /> */}
+                <ConnectMetaMask type={type} closeFun={CloseModal}/>
+                {/* <br /> */}
+                <ConnectBackpack type={type} closeFun={CloseModal}/>
+                {/* <div className={`${selectedTab === "tokens" ? "visible" : "hidden"}`}><Assets tokenBalances={tokenBalances} loading={loading} publicKey={publicKey} /> </div>
+                <div className={`${selectedTab === "swap" ? "visible" : "hidden"}`}><Swap tokenBalances={tokenBalances} publicKey={publicKey} /> </div>
+                <div className={`${(selectedTab !== "swap" && selectedTab !== "tokens") ? "visible" : "hidden"}`}><Warning /> </div> */}
             </div>
             {/* <div className="relative  w-full text-center">
               <span className="before:content-[''] before:h-[0.5px] before:w-80 before:absolute before:top-[50%] before:left-0 before:bg-slate-400">

@@ -1,32 +1,27 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import MetaMaskOnboarding from '@metamask/onboarding';
+import metaMask from '../../public/logos/metaMask.png';
+import Image from "next/image";
+import { useRouter } from 'next/router';
 
-const forwarderOrigin = 'http://localhost:3000';
-
-const ConnectMetaMask = () => {
+const ConnectMetaMask = ({type,closeFun}) => {
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
   const [buttonText, setButtonText] = useState('Connect MetaMask');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (isMetaMaskAvailable()) {
       setIsMetaMaskInstalled(true);
       setButtonText('Connect MetaMask');
     } else {
-      setIsMetaMaskInstalled(false);
-      setButtonText('Click here to install MetaMask');
+      setButtonText('MetaMask Not Installed');
+      setIsButtonDisabled(true);
     }
   }, []);
 
   const isMetaMaskAvailable = () => {
     return Boolean(window.ethereum && window.ethereum.isMetaMask);
-  };
-
-  const installMetaMask = () => {
-    const onboarding = new MetaMaskOnboarding({ forwarderOrigin });
-    setButtonText('Installation in progress');
-    setIsButtonDisabled(true);
-    onboarding.startOnboarding();
   };
 
   const connectMetaMask = async () => {
@@ -39,20 +34,20 @@ const ConnectMetaMask = () => {
       console.error('Error occurred while connecting to MetaMask:', error);
     } finally {
       setIsButtonDisabled(false);
+      console.log("MetaMask connected");
+      closeFun();
+      type === 'login' ? router.push('/') : router.push('/search?category=Programming%20&%20Tech');
     }
   };
 
   const handleClick = () => {
-    if (isMetaMaskInstalled) {
-      connectMetaMask();
-    } else {
-      installMetaMask();
-    }
+    connectMetaMask();
   };
 
   return (
-    <button onClick={handleClick} disabled={isButtonDisabled}>
-      {buttonText}
+    <button className="border border-slate-300 p-2 font-medium w-64 flex items-center justify-around relative rounded mb-2" onClick={handleClick} disabled={isButtonDisabled}>
+      <Image src={metaMask} alt="MetaMask Wallet" width={40} height={40} className="rounded"/>
+      <h2 className='text-slate-600'>{type === "login" ? "Login" : "Sign"} in with MetaMask</h2>
     </button>
   );
 };

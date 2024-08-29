@@ -48,8 +48,8 @@ function Navbar() {
 
   const links = [
     { linkName: "Fiverr Business", handler: "#", type: "link" },
-    { linkName: "Explore", handler: "#", type: "link" },
-    { linkName: "English", handler: "#", type: "link" },
+    // { linkName: "Explore", handler: "#", type: "link" },
+    // { linkName: "English", handler: "#", type: "link" },
     { linkName: "Become a Seller", handler: handleLogin, type: "button" },
     { linkName: "Sign in", handler: handleLogin, type: "button" },
     { linkName: "Join", handler: handleSignup, type: "button2" },
