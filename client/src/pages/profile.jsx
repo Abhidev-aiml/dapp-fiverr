@@ -138,7 +138,7 @@ function Profile() {
                   />
                 ) : (
                   <span className="text-6xl text-white">
-                    {userInfo.email[0].toUpperCase()}
+                    {userInfo.publicKey[0].toUpperCase()}
                   </span>
                 )}
                 <div

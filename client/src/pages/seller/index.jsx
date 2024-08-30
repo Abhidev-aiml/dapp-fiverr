@@ -41,7 +41,7 @@ function Index() {
                 ) : (
                   <div className="bg-purple-500 h-24 w-24 flex items-center justify-center rounded-full relative">
                     <span className="text-5xl text-white">
-                      {userInfo.email[0].toUpperCase()}
+                      {userInfo.publicKey[0].toUpperCase()}
                     </span>
                   </div>
                 )}

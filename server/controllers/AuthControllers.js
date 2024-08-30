@@ -27,9 +27,9 @@ export const signup = async (req, res) => {
       const user = await prisma.user.create({
         data: {
           publicKey,
-          isProfileInfoSet: false,
-        },
-      });
+        }
+      }, console.log("User created successfully"),
+    );
 
       return res.status(201).json({
         user: { id: user?.id, publicKey: user?.publicKey },

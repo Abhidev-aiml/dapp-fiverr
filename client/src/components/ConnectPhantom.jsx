@@ -4,7 +4,7 @@ import phantomLogo from '../../public/logos/phantomLogo.png';
 import Image from "next/image";
 import { useRouter } from 'next/router';
 
-const ConnectPhantom = ({type, closeFun}) => {
+const ConnectPhantom = ({onConnect,type, closeFun}) => {
   const router = useRouter();
   const [isPhantomInstalled, setIsPhantomInstalled] = useState(false);
   const [buttonText, setButtonText] = useState('Connect Phantom');
@@ -36,12 +36,13 @@ const ConnectPhantom = ({type, closeFun}) => {
       const resp = await window.solana.connect();
       setButtonText('Connected');
       console.log('Public Key:', resp.publicKey.toString(), resp.publicKey);
+      onConnect(resp.publicKey.toString());
     } catch (error) {
       console.error('Error occurred while connecting to Phantom:', error);
     } finally {
       setIsButtonDisabled(false);
       console.log("Phantom connected");
-      closeFun();
+      closeFun;
       type === 'login' ? router.push('/') : router.push('/search?category=Programming%20&%20Tech');
     }
   };
