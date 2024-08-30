@@ -3,10 +3,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/AuthRoutes.js";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 import { gigRoutes } from "./routes/GigRoutes.js";
 import { orderRoutes } from "./routes/OrderRoutes.js";
 import { messageRoutes } from "./routes/MessageRoutes.js";
 import { dashboardRoutes } from "./routes/DashboardRoutes.js";
+import { paymentRoutes } from "./routes/PaymentRoutes.js";
 
 dotenv.config();
 
@@ -32,7 +34,11 @@ app.use("/api/gigs", gigRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
 
+// Use payment routes
+app.use('/api/pay', paymentRoutes);
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });

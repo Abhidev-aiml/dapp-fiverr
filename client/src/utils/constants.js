@@ -7,6 +7,7 @@ export const GIG_ROUTES = `${API_URL}/gigs`;
 export const ORDERS_ROUTES = `${API_URL}/orders`;
 export const MESSAGES_ROUTES = `${API_URL}/messages`;
 export const DASHBOARD_DATA_ROUTES = `${API_URL}/dashboard`;
+export const PAYMENT_ROUTES = `${API_URL}/payment`; // Added for payment routes
 
 export const LOGIN_ROUTE = `${AUTH_ROUTES}/login`;
 export const SIGNUP_ROUTE = `${AUTH_ROUTES}/signup`;
@@ -34,3 +35,6 @@ export const GET_UNREAD_MESSAGES = `${MESSAGES_ROUTES}/unread-messages`;
 export const MARK_AS_READ_ROUTE = `${MESSAGES_ROUTES}/mark-as-read`;
 
 export const GET_SELLER_DASHBOARD_DATA = `${DASHBOARD_DATA_ROUTES}/seller`;
+
+// Payment Routes
+export const PAY_NOW_ROUTE = `${PAYMENT_ROUTES}/pay`; // Endpoint for initiating payment
