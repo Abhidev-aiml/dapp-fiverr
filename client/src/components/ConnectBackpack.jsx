@@ -4,7 +4,7 @@ import backPack from '../../public/logos/backPack.png';
 import Image from "next/image";
 import { useRouter } from 'next/router';
 
-const ConnectBackpack = ({type,closeFun}) => {
+const ConnectBackpack = ({onConnect,type,closeFun}) => {
   const [isBackpackInstalled, setIsBackpackInstalled] = useState(false);
   const [buttonText, setButtonText] = useState('Connect Backpack');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -33,10 +33,10 @@ const ConnectBackpack = ({type,closeFun}) => {
   const connectBackpack = async () => {
     setIsButtonDisabled(true);
     try {
-      const accounts = await window.backpack.connect();
+      const resp = await window.backpack.connect();
       setButtonText('Connected');
       console.log('Accounts:', accounts.publicKey.toString());
-      navigate()
+      onConnect(resp.publicKey.toString());
     } catch (error) {
       console.error('Error occurred while connecting to Backpack:', error);
     } finally {

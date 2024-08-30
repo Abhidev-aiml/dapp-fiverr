@@ -70,9 +70,9 @@ function AuthWrapper({ type }) {
             </h3>
             <div className="w-full flex flex-col gap-5 items-center">
               {/* Connect Wallet Components */}
-              <ConnectPhantom onConnect={handleWalletConnect} type={type} />
-              <ConnectMetaMask onConnect={handleWalletConnect} type={type} />
-              <ConnectBackpack onConnect={handleWalletConnect} type={type} />
+              <ConnectPhantom onConnect={handleWalletConnect} type={type} closeFun={CloseModal}/>
+              <ConnectMetaMask onConnect={handleWalletConnect} type={type} closeFun={CloseModal}/>
+              <ConnectBackpack onConnect={handleWalletConnect} type={type} closeFun={CloseModal}/>
             </div>
           </div>
           <div className="py-5 w-full flex items-center justify-center border-t border-slate-400">

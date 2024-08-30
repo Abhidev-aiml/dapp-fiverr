@@ -4,7 +4,7 @@ import metaMask from '../../public/logos/metaMask.png';
 import Image from "next/image";
 import { useRouter } from 'next/router';
 
-const ConnectMetaMask = ({type,closeFun}) => {
+const ConnectMetaMask = ({onConnect,type,closeFun}) => {
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
   const [buttonText, setButtonText] = useState('Connect MetaMask');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -27,9 +27,10 @@ const ConnectMetaMask = ({type,closeFun}) => {
   const connectMetaMask = async () => {
     setIsButtonDisabled(true);
     try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const resp = await window.ethereum.request({ method: 'eth_requestAccounts' });
       setButtonText('Connected');
       console.log('Accounts:', accounts);
+      onConnect(resp.publicKey.toString());
     } catch (error) {
       console.error('Error occurred while connecting to MetaMask:', error);
     } finally {

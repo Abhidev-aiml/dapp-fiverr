@@ -43,7 +43,7 @@ function SearchGridItem({ gig }) {
           ) : (
             <div className="bg-purple-500 h-7 w-7 flex items-center justify-center rounded-full relative">
               <span className="text-lg text-white">
-                {gig.createdBy.email[0].toUpperCase()}
+                {gig.createdBy.publicKey[0].toUpperCase()}
               </span>
             </div>
           )}

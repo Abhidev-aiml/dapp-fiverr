@@ -45,7 +45,7 @@ function Details() {
               ) : (
                 <div className="bg-purple-500 h-10 w-10 flex items-center justify-center rounded-full relative">
                   <span className="text-xl text-white">
-                    {gigData.createdBy.email[0].toUpperCase()}
+                    {gigData.createdBy.publicKey[0].toUpperCase()}
                   </span>
                 </div>
               )}
@@ -126,7 +126,7 @@ function Details() {
                 ) : (
                   <div className="bg-purple-500 h-10 w-10 flex items-center justify-center rounded-full relative">
                     <span className="text-xl text-white">
-                      {gigData.createdBy.email[0].toUpperCase()}
+                      {gigData.createdBy.publicKey[0].toUpperCase()}
                     </span>
                   </div>
                 )}
