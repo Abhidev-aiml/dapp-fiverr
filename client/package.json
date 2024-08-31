@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/web3.js": "^1.95.3",
     "@stripe/react-stripe-js": "^2.1.0",
     "@stripe/stripe-js": "^1.52.1",
     "@types/node": "18.15.11",
