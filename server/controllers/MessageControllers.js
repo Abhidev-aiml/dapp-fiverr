@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/generated/client";
-;
+import { PrismaClient } from "@prisma/client";
 
 export const addMessage = async (req, res, next) => {
   try {

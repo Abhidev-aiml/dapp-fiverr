@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/generated/client";
-
+import { PrismaClient } from "@prisma/client";
 
 export const getSellerData = async (req, res, next) => {
   try {

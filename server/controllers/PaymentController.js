@@ -1,7 +1,6 @@
 // PaymentController.js
 
-import { PrismaClient } from "@prisma/generated/client";
-
+import { PrismaClient } from "@prisma/client";
 import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 
 const prisma = new PrismaClient();
