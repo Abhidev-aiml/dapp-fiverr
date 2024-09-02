@@ -69,7 +69,7 @@ function HomeBanner() {
       <div className="z-10 relative w-[650px] flex justify-center flex-col h-full gap-5 ml-20">
         <h1 className="text-white text-5xl leading-snug">
           Find the perfect&nbsp;
-          <i>freelance</i>
+          <i className="text-[#1DBF73]">freelance</i>
           <br />
           services for your business
         </h1>
@@ -95,28 +95,16 @@ function HomeBanner() {
           Popular:
           <ul className="flex gap-5">
             <li
-              className="text-sm py-1 px-3 border rounded-full hover:bg-white hover:text-black transition-all duration-300	cursor-pointer"
-              onClick={() => router.push("/search?q=website design")}
+              className="text-sm py-1 px-3 border rounded-full text-center hover:bg-white hover:text-black transition-all duration-300	cursor-pointer"
+              onClick={() => router.push("/search?category=Full Stack Development")}
             >
-              Website Design
+              Full Stack Development
             </li>
             <li
-              className="text-sm py-1 px-3 border rounded-full hover:bg-white hover:text-black transition-all duration-300	cursor-pointer"
-              onClick={() => router.push("/search?q=wordpress")}
+              className="text-sm py-1 px-3 border rounded-full text-center hover:bg-white hover:text-black transition-all duration-300	cursor-pointer"
+              onClick={() => router.push("/search?category=Decentralized Applications")}
             >
-              Wordpress
-            </li>
-            <li
-              className="text-sm py-1 px-3 border rounded-full hover:bg-white hover:text-black transition-all duration-300	cursor-pointer"
-              onClick={() => router.push("/search?q=logo design")}
-            >
-              Logo Design
-            </li>
-            <li
-              className="text-sm py-1 px-3 border rounded-full hover:bg-white hover:text-black transition-all duration-300	cursor-pointer"
-              onClick={() => router.push("/search?q=ai services")}
-            >
-              AI Services
+              Decentralized Applications
             </li>
           </ul>
         </div>

@@ -16,22 +16,22 @@ function Footer() {
     {
       name: "Youtube",
       icon: <FiYoutube />,
-      link: "https://www.youtube.com/KishanSheth21/",
+      link: "https://www.youtube.com/",
     },
     {
       name: "LinkedIn",
       icon: <FiLinkedin />,
-      link: "https://www.linkedin.com/in/koolkishan/",
+      link: "https://www.linkedin.com",
     },
     {
       name: "Instagram",
       icon: <FiInstagram />,
-      link: "https://instagram.com/koolkishansheth",
+      link: "https://instagram.com/",
     },
     {
       name: "Twitter",
       icon: <FiTwitter />,
-      link: "https://twitter.com/koolkishansheth",
+      link: "https://twitter.com/",
     },
   ];
   const data = [

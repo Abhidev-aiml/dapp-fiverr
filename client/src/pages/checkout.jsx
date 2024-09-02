@@ -133,7 +133,7 @@ function Checkout() {
         // Solana payment section
         <>
           <div className="bg-gray-600 text-white rounded-lg p-4 shadow-lg w-full max-w-md mx-auto">
-            <h1 className="text-3xl pb-5 font-semibold">Payment Info (Solana.</h1>
+            <h1 className="text-3xl pb-5 font-semibold">Payment Info (Solana).</h1>
             <div className="flex flex-col space-y-4">
               <div>
                 <h2 className="text-2xl font-semibold">Total Amount in SOL</h2>
